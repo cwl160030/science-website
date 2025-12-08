@@ -14,6 +14,16 @@ body {
   color: #FFFFFF;
 }
 
+.education-section {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
 /**
  * Links
  */
@@ -34,7 +44,29 @@ small {
  * Headings
  */
 h1,
-h2,
+h2{}
+.education-entry {
+    margin-bottom: 25px;
+}
+
+.degree-level {
+    color: rgb(255, 255, 255); /* rgb(0, 102, 204); */
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.university {
+    font-size: 16px;
+    color: #fff; /*#555;*/
+    margin-bottom: 4px;
+}
+
+.degree-name {
+    font-size: 16px;
+    color: #fff; /*#666;*/
+    font-style: italic;
+},
 h3,
 h4,
 h5,
