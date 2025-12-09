@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chance Lander</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #f5f7fa;
+        }
+
+        header {
+            /* 
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #3A47FF 0%, #00d2ff 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+            background: #2563EB;
+            */
+            background: #1E90FF;
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background-color: #2563EB; /* #1e40af; */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav-container::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .nav-container::-webkit-scrollbar-track {
+            background: #1e3a8a;
+        }
+
+        .nav-container::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 2px;
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .tab-button:hover {
+            background-color: #60a5fa; /* #2563eb; */
+        }
+
+        .tab-button.active {
+            background-color: #3b82f6;
+            border-bottom: 3px solid white;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: fadeIn 0.3s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .about-container {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .portrait {
+            width: 250px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(30, 58, 138, 0.2);
+            flex-shrink: 0;
+        }
+
+        h2 {
+            color: #1e3a8a;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #3b82f6;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #1e40af;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .education-item, .publication-item, .award-item, .presentation-item, .course-item {
+            margin-bottom: 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #93c5fd;
+        }
+
+        .year {
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 0.95rem;
+        }
+
+        .title {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .institution {
+            font-style: italic;
+            color: #64748b;
+        }
+
+        h4 {
+            color: white;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        footer {
+            /* 
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #3A47FF 0%, #00d2ff 100%);
+            background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+            */
+            background: #1E90FF;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .contact-info {
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+
+        .contact-info a {
+            color: white; /* #93c5fd; */
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .about-container {
+                flex-direction: column;
+            }
+
+            .portrait {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .tab-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Chance Lander</h1>
+            <p class="subtitle">Physical Chemistry | Computational Chemistry and Catalysis</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <button class="tab-button active" onclick="openTab(event, 'about')">About</button>
+            <button class="tab-button" onclick="openTab(event, 'education')">Education</button>
+            <button class="tab-button" onclick="openTab(event, 'publications')">Publications</button>
+            <button class="tab-button" onclick="openTab(event, 'awards')">Awards</button>
+            <button class="tab-button" onclick="openTab(event, 'presentations')">Presentations</button>
+            <button class="tab-button" onclick="openTab(event, 'teaching')">Teaching</button>
+        </div>
+    </nav>
+
+    <main>
+        <div id="about" class="tab-content active">
+            <h2>About Me</h2>
+            <div class="about-container">
+                <div class="about-text">
+                <p>
+                   I am a 5th year graduate student at the University of Oklahoma 
+                   studying physical/computational chemistry. 
+                   My research is primarily focused on the modeling of 
+                   reaction mechanisms, allowing for a better understanding of
+                   catalytic activity and product formation. 
+                   I am particularly interested in the chemistry of metal-organic 
+                   frameworks, surface catalysis, and organometallic chemistry, 
+                   as well as approaches to make modeling these systems faster, 
+                   more accurate, and more insightful.
+                </p>
+                <br>
+                <p>
+                  For the most up-to-date list of publications, see my 
+                  <a href="https://scholar.google.com/citations?user=mppFZpAAAAAJ&hl=en">
+                    Google Scholar page</a>.
+                </p>
+                <br>
+                <p>
+                  My CV can be found here: <a href="chance_lander_CV.pdf" target="_blank">Curriculum Vitae</a>
+                </p>
+                </div>
+                <img src="cwl_hshot.jpg" alt="Chance Lander" class="portrait">
+            </div>
+        </div>
+
+        <div id="education" class="tab-content">
+            <h2>Education</h2>
+            
+            <div class="education-item">
+                <p class="year">2021-Present</p>
+                <p class="title">Ph.D. in Physical Chemistry</p>
+                <p class="institution">University of Oklahoma</p>
+                <!-- <p>Dissertation: "Under Preparation"</p> -->
+                <p>Advisor: Prof. Yihan Shao</p>
+            </div>
+
+            <div class="education-item">
+                <p class="year">2020</p>
+                <p class="title">B.S. in Biochemistry</p>
+                <p class="institution">University of Texas at Dallas</p>
+                <!-- <p>Graduated Cum Laude</p> -->
+            </div>
+        </div>
+
+        <div id="publications" class="tab-content">
+            <h2>Selected Publications</h2>
+
+            <h3>Journal Articles</h3>
+            
+            <div class="publication-item">
+                <p><strong>[13]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/full/10.1021/jacs.5c10498">Proton, Electron, and Hydrogen-Atom Transfer Thermodynamics of the Metal–Organic Framework, Ti-MIL-125, Are Intrinsically Correlated to the Structural Disorder.</a></span></p>
+                <p>Altınçekiç, N. G.; <b>Lander, C. W.</b>; Yu, J.; Roslend, A.; Shao, Y.; Noh, H.</p>
+                <p><span class="institution">J. Am. Chem. Soc.</span> 2025, 147, 38, 34777–34790.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[12]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/full/10.1021/jacsau.5c00111">Toward an Understanding of Linear Scaling Relations through Energy Decomposition Analysis.</a></span></p>
+                <p>DiCenso, Jesse<sup>†</sup>; <b>Lander, C.<sup>†</sup></b>; Pei, Z.; Sengupta, S.; Le, T.; Zhang, Y.; Gunasooriya, G. T. K. K.; Wang, B.; Mao, Y.; Shao, Y.</p>
+                <p><span class="institution">JACS Au</span> 2025, 5, 3092–3103.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[11]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://www.nature.com/articles/s41467-024-55619-7">Towards non-blinking and photostable perovskite quantum dots.</a></span></p>
+                <p>Mi, C.; Gee, G. C.; <b>Lander, C. W.</b>; Shin, D.; Atteberry, M. L.; Akhmedov, N. G.; Hidayatova, L.; DiCenso, J. D.; Yip, W. T.; Chen, B.; Shao, Y.; Dong, Y.</p>
+                <p><span class="institution">Nat Commun</span> 2025, 16, 204.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[10]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/abs/10.1021/acscatal.5c02301">Iron-Carbene-Mediated Catalytic Activation of Conventional Thioglycosides for Stereoselective 1,2-cis-Furanosylations.</a></span></p>
+                <p>Singh, S. P.; Chaudhary, U.; <b>Lander, C. W.</b>; Daroczi, A.; Shao, Y.; Sharma, I. </p>
+                <p><span class="institution">ACS Catal.</span> 2025, 15, 9886–9896.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[9]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/full/10.1021/jacs.4c10421">Electrochemically Determined and Structurally Justified Thermochemistry of H atom Transfer on Ti-Oxo Nodes of the Colloidal Metal–Organic Framework Ti-MIL-125.</a></span></p>
+                <p>Altınçekiç, N. G.; <b>Lander, C. W.</b>; Roslend, A.; Yu, J.; Shao, Y.; Noh, H.</p>
+                <p><span class="institution">J. Am. Chem. Soc.</span> 2024, 146, 33485–33498.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[8]</strong> <span class="title"> <a target="_blank" rel="noopener noreferrer" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/jcc.27269">Training machine learning potentials for reactive systems: A Colab tutorial on basic models.</a></span></p>
+                <p>Pan, X.<sup>†</sup>; Snyder, R.<sup>†</sup>; Wang, J.N.<sup>†</sup>; <b>Lander, C.<sup>†</sup></b>; Wickizer, C.<sup>†</sup>; Van, R.; Chesney, A.; Xue, Y.; Mao, Y.; Mei, Y.; Pu, J.; Shao, Y.</p>
+                <p><span class="institution">J Comput Chem</span> 2024, 45, 638–647.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[7]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/abs/10.1021/acs.orglett.4c03281">Catalytic Activation of Thioglycosides with Copper-Carbenes for Stereoselective 1,2-cis-Furanosylations.</a></span></p>
+                <p>Ghosh, B.; Alber, A.; <b>Lander, C. W.</b>; Shao, Y.; Nicholas, K. M.; Sharma, I.</p>
+                <p><span class="institution">Org. Lett.</span> 2024, 26, 9436–9441.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[6]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/abs/10.1021/acscatal.3c05237">Catalytic Stereoselective 1,2-cis-Furanosylations Enabled by Enynal-Derived Copper Carbenes.</a></span></p>
+                <p>Ghosh, B.; Alber, A.; <b>Lander, C. W.</b>; Shao, Y.; Nicholas, K. M.; Sharma, I. </p>
+                <p><span class="institution">ACS Catal.</span> 2024, 14, 1037–1049.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[5]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/abs/10.1021/acs.jpcc.4c02409">Hydrogen Atom Binding Energy of Structurally Well-Defined Cerium Oxide Nodes at the Metal–Organic Framework–Liquid Interfaces.</a></span></p>
+                <p>Ingram, Z. J.; <b>Lander, C. W.</b>; Oliver, M. C.; Altınçekiç, N. G.; Huang, L.; Shao, Y.; Noh, H.</p>
+                <p><span class="institution">J. Phys. Chem. C</span> 2024, 128, 9556–9565.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[4]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://chemistry-europe.onlinelibrary.wiley.com/doi/abs/10.1002/ejic.202300506">Reaction Pathway for the Aerobic Oxidation of Phosphines Catalyzed by Oxomolybdenum Salen Complexes.</a></span></p>
+                <p>Rusmore, T. A.; <b>Lander, C.</b>; Nicholas, K. M.</p>
+                <p><span class="institution">Eur J Inorg Chem</span> 2024, 27, e202300506.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[3]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://www.tandfonline.com/doi/abs/10.1080/00268976.2022.2113566">Visualization of electron density changes along chemical reaction pathways.</a></span></p>
+                <p><b>Lander, C.<sup>†</sup></b>; Satalkar, V.<sup>†</sup>; Yang, J.<sup>†</sup>; Pan, X.; Pei, Z.; Chatterji, A.; Liu, C.; Nicholas, K. M.; Cichewicz, R. H.; Yang, Z.; Shao, Y.</p>
+                <p><span class="institution">Mol. Phys.</span> 2023, 121, e2113566.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[2]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/abs/10.1021/acs.jpcb.2c01254">Effect of an Amyloidogenic SARS-COV-2 Protein Fragment on ɑ-Synuclein Monomers and Fibrils.</a></span></p>
+                <p>Jana, A. K.; <b>Lander, C. W.</b>; Chesney, A. D.; Hansmann, U. H. E.</p>
+                <p><span class="institution">J. Phys. Chem. B</span> 2022, 126, 3648–3658.</p>
+            </div>
+
+            <div class="publication-item">
+                <p><strong>[1]</strong> <span class="title"><a target="_blank" rel="noopener noreferrer" href="https://pubs.acs.org/doi/abs/10.1021/acs.inorgchem.2c01598">Computational Evaluation of Potential Molecular Catalysts for Nitrous Oxide Decomposition.</a></span></p>
+                <p>Nicholas, K. M.; <b>Lander, C.</b>; Shao, Y.</p>
+                <p><span class="institution">Inorg. Chem.</span> 2022, 61, 14591–14605.</p>
+            </div>
+
+            <!-- <div class="publication-item">
+                <p><strong>[Z]</strong> <span class="title">Title</span></p>
+                <p>Auth</p>
+                <p><span class="institution">Journal</span> info</p>
+            </div> -->
+
+        </div>
+
+        <div id="awards" class="tab-content">
+            <h2>Awards & Honors</h2>
+
+            <div class="award-item">
+                <p class="year">2025</p>
+                <p class="title">Excellence in Graduate Research Award</p>
+                <p>University of Oklahoma Department of Chemistry and Biochemistry</p>
+                <p>In recognition of excellent contributions in scholarly activity and outstanding performance in research</p>
+            </div>
+
+            <div class="award-item">
+                <p class="year">2023</p>
+                <p class="title">Roger E. Frech Scholarship</p>
+                <p>University of Oklahoma Department of Chemistry and Biochemistry</p>
+                <p>For outstanding research in the fields of physical, inorganic, or analytical chemistry</p>
+            </div>
+
+            <div class="award-item">
+                <p class="year">2023</p>
+                <p class="title">Harwell Endowed Scholarship</p>
+                <p>University of Oklahoma Department of Chemistry and Biochemistry</p>
+                <p>For outstanding academic achievement</p>
+            </div>
+
+            <div class="award-item">
+                <p class="year">2021</p>
+                <p class="title">Kenneth M. Nicholas Graduate Fellowship</p>
+                <p>University of Oklahoma Department of Chemistry and Biochemistry</p>
+                <p>Awarded to one incoming first-year graduate student studying synthesis/catalysis</p>
+            </div>
+
+            <div class="award-item">
+                <p class="year">2016-2020</p>
+                <p class="title">Academic Excellence Scholarship with Distinction</p>
+                <p>University of Texas at Dallas</p>
+                <p>Scholarship for academically talented first-time freshmen</p>
+            </div>
+
+        </div>
+
+        <div id="presentations" class="tab-content">
+            <h2>Presentations</h2>
+
+            <h3>Conference Presentations</h3>
+
+            <div class="presentation-item">
+                <p class="year">Spring 2025</p>
+                <!--  <p class="title">"Title here"</p> -->
+                <p class="institution">ACS San Diego - Oral</p>
+            </div>
+
+            <div class="presentation-item">
+                <p class="year">Fall 2024</p>
+                <p class="institution">ACS Southwest Regional Meeting - Poster</p>
+            </div>
+
+            <div class="presentation-item">
+                <p class="year">Spring 2024</p>
+                <p class="institution">ACS New Orleans - Poster</p>
+            </div>
+
+            <div class="presentation-item">
+                <p class="year">Fall 2023</p>
+                <p class="institution">ACS Southwest Regional Meeting - Oral</p>
+            </div>
+
+        </div>
+
+        <div id="teaching" class="tab-content">
+            <h2>Teaching</h2>
+
+            <!-- <h3>Current Courses</h3> -->
+
+            <h3>Previous Courses</h3>
+            
+            <div class="course-item">
+                <p class="title">CHEM 3423: Physical Chemistry I - Role: Lecturer</p>
+                <p>Undergraduate course in physical chemistry covering thermodynamics, phase equilibria, kinetics, and reaction mechanisms.</p>
+                <p><strong>Summer: 2025</strong></p>
+            </div>
+
+            <div class="course-item">
+                <p class="title">CHEM 3421: Physical Chemistry I Lab - Role: TA Lab Instructor</p>
+                <p>Undergraduate lab course in physical chemistry emphasizing measurement and calibration, while covering topics in thermodynamics, phase equilibria, kinetics, and reaction mechanisms.</p>
+                <p><strong>Spring: 2025</strong></p>
+            </div>
+
+            <div class="course-item">
+                <p class="title">CHEM 1415: General Chemistry II Lab - Role: TA Lab Instructor</p>
+                <p>Undergraduate lab course in general chemistry emphasizing scientific writing technique, while covering topics in thermodynamics, acid-base chemistry, kinetics, and electrochemistry.</p>
+                <p><strong>Fall: 2021, 2022; Summer: 2022</strong></p>
+            </div>
+
+            <!-- 
+            <h3>Supervision</h3>
+
+            <p style="margin-top: 1rem;">Discuss supervision of students...</p>
+            -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <h4>Contact Information</h4>
+            <div class="contact-info">
+                <p><b>Email:</b> <a href="mailto:chance.lander@ou.edu">chance.lander@ou.edu</a></p>
+                <p>University of Oklahoma</p>
+                <p>Department of Chemistry and Biochemistry</p>
+                <p>101 Stephenson Parkway SLSRC</p>
+                <p>Norman, OK 73019</p>
+            </div>
+            <!-- Currently reserve no rights -->
+            <!-- <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">&copy; 2025 Chance Lander. All rights reserved.</p> -->
+        </div>
+    </footer>
+
+    <script>
+        function openTab(evt, tabName) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove('active');
+            }
+
+            // Remove active class from all buttons
+            const tabButtons = document.getElementsByClassName('tab-button');
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove('active');
+            }
+
+            // Show the selected tab and mark button as active
+            document.getElementById(tabName).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
